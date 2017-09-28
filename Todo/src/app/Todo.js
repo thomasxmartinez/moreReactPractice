@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Switch } from 'react-native';
 
 export class Todo extends Component {
   constructor() {
@@ -10,54 +10,29 @@ export class Todo extends Component {
     };
   }
 
-  componentWillMount() {
-    fetch('http://localhost:3000/todos', {
-      headers: {
-        Accept: 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(todos => this.setState({ todos }));
-  }
-
   handleChange(text) {
     this.setState({ newTodo: text });
   }
 
   handlePress() {
-    const newtodo = {
-      name: this.state.newTodo
-    };
-
-    fetch('http://localhost:3000/todos/', {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newtodo)
-    })
-      .then(data => data.json())
-      .then(json => {
-        const todos = [...this.state.todos, newtodo];
-        this.setState({ todos, newTodo: '' });
-      });
+    const todos = [...this.state.todos, this.state.newTodo];
+    this.setState({ todos, newTodo: '' });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Switch />
+        <Image style={styles.image} source={require('./hongZhou.png')} />
         <View style={styles.form}>
           <TextInput style={styles.input} value={this.state.newTodo} onChangeText={this.handleChange.bind(this)} />
           <TouchableOpacity style={styles.button} onPress={this.handlePress.bind(this)}>
-            <Text style={styles.buttonText}>make</Text>
+            <Text style={styles.buttonText}>Hire the guy who made this</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.todos}>
           {this.state.todos.map((todo, i) => (
             <View key={i} style={styles.todo}>
-              <Text style={styles.todoText}>{todo.name}</Text>
+              <Text style={styles.todoText}>{todo}</Text>
             </View>
           ))}
         </View>
@@ -67,39 +42,53 @@ export class Todo extends Component {
 }
 
 const styles = StyleSheet.create({
+  image: {
+    top: 15,
+    height: 20,
+    width: 300
+  },
   container: {
     flex: 1,
-    padding: 20
+    padding: 8,
+    backgroundColor: '#0069B1'
   },
   form: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    top: 5
   },
   input: {
     flex: 0.7,
-    fontSize: 24
+    fontSize: 24,
+    marginTop: 1
   },
   button: {
-    flex: 0.3,
+    flex: 1,
     borderWidth: 1,
-    height: 50,
-    borderColor: 'blue',
-    borderRadius: 3,
+    backgroundColor: '#A2AAAD',
+    borderColor: '#0069B1',
+    borderRadius: 4,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 110,
+    right: 75
   },
   buttonText: {
     fontSize: 24,
     fontWeight: 'bold'
   },
   todos: {
-    marginTop: 60
+    marginTop: 0,
+    marginBottom: 5
   },
   todo: {
-    marginBottom: 10,
+    marginBottom: 5,
     borderBottomWidth: 1,
-    borderBottomColor: 'lightgrey'
+    borderBottomColor: '#000000'
   },
   todoText: {
-    fontSize: 24
+    fontSize: 24,
+    marginBottom: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });

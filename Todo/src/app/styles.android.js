@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
@@ -6,16 +6,17 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#14ccb0',
+    backgroundColor: '#ef235f',
     padding: 40
   },
   box: {
-    backgroundColor: '#ef235f',
-    width: 300,
-    height: 10,
+    backgroundColor: 'yellow',
+    width: width / 2,
+    height: height / 3,
     position: 'absolute',
-    top: 500,
-    left: 100
+    top: 20,
+    left: 30,
+    borderRadius: 30
   },
   text: {
     color: 'white',

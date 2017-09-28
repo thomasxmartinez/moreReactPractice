@@ -9,7 +9,7 @@ export class Reddit extends Component {
     };
   }
   componentWillMount() {
-    fetch('https://www.reddit.com/.json', {
+    fetch('https://www.reddit.com/user/KouRouShuaige/.json', {
       Accept: 'application/json'
     })
       .then(res => res.json())
@@ -17,12 +17,11 @@ export class Reddit extends Component {
         this.setState({ posts: data.data.children });
       });
   }
-
   render() {
     return (
       <View>
         <Text>reddit</Text>
-        <View>{this.state.posts.map(post => <Text>{post.data.author}</Text>)}</View>
+        <View>{this.state.posts.map(post => <Text>{post.data.link_url}</Text>)}</View>
       </View>
     );
   }
