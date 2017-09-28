@@ -1,28 +1,21 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import { connect } from 'react-redux';
+import {ADD_POST} from './reducers';
 
-export class Reddit extends Component {
-  constructor() {
-    super();
-    this.state = {
-      posts: []
-    };
-  }
-  componentWillMount() {
-    fetch('https://www.reddit.com/user/KouRouShuaige/.json', {
-      Accept: 'application/json'
-    })
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ posts: data.data.children });
-      });
-  }
-  render() {
-    return (
-      <View>
-        <Text>reddit</Text>
-        <View>{this.state.posts.map(post => <Text>{post.data.body}</Text>)}</View>
-      </View>
-    );
+const _Reddit = props => (
+  <View>
+    <View>{props.posts.map(post => <Text>{props.post.data.body}</Text>)}</View>
+  </View>
+);
+
+const mapActionsToProps = (dispatch) => {
+  addRedditPost(post={name: 'new Post'}){
+    dispatch({type: ADD_POST, payload: post})
   }
 }
+const mapStateToProps = state => ({
+  posts: state.reddit
+});
+
+export const Reddit = connect(mapStateToProps, null)(_Reddit);

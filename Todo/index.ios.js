@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet } from 'react-native';
+import { Provider } from 'react-redux';
+import { store } from './src/app/store';
 import { Todo } from './src/app/Todo';
 import { Fancy } from './src/app/Fancy';
 import { Reddit } from './src/app/Reddit';
 
-const Main = () => <Todo />;
+const Main = () => (
+  <Provider store={store}>
+    <Todo />
+  </Provider>
+);
 
 const styles = StyleSheet.create({
   container: {

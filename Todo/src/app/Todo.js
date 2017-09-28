@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Switch } from 'react-native';
+import { Reddit } from './Reddit';
 
 export class Todo extends Component {
   constructor() {
@@ -47,6 +48,7 @@ export class Todo extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Reddit />
         <Image style={styles.image} source={require('./hongZhou.png')} />
         <View style={styles.form}>
           <TextInput style={styles.input} value={this.state.newTodo} onChangeText={this.handleChange.bind(this)} />
