@@ -10,13 +10,38 @@ export class Todo extends Component {
     };
   }
 
+  componentWillMount() {
+    fetch('http://localhost:3000/todos', {
+      headers: {
+        Accept: 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(todos => this.setState({ todos }));
+  }
+
   handleChange(text) {
     this.setState({ newTodo: text });
   }
 
   handlePress() {
-    const todos = [...this.state.todos, this.state.newTodo];
-    this.setState({ todos, newTodo: '' });
+    const newtodo = {
+      name: this.state.newTodo
+    };
+
+    fetch('http://localhost:3000/todos/', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newtodo)
+    })
+      .then(data => data.json())
+      .then(json => {
+        const todos = [newtodo, ...this.state.todos];
+        this.setState({ todos, newTodo: '' });
+      });
   }
 
   render() {
@@ -32,7 +57,7 @@ export class Todo extends Component {
         <View style={styles.todos}>
           {this.state.todos.map((todo, i) => (
             <View key={i} style={styles.todo}>
-              <Text style={styles.todoText}>{todo}</Text>
+              <Text style={styles.todoText}>{todo.name}</Text>
             </View>
           ))}
         </View>
@@ -78,10 +103,10 @@ const styles = StyleSheet.create({
   },
   todos: {
     marginTop: 0,
-    marginBottom: 5
+    marginBottom: 8
   },
   todo: {
-    marginBottom: 5,
+    marginBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#000000'
   },
@@ -89,6 +114,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 5,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    color: '#A2AAAD',
+    fontSize: 24
   }
 });

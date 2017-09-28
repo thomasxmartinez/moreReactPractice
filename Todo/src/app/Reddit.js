@@ -21,7 +21,7 @@ export class Reddit extends Component {
     return (
       <View>
         <Text>reddit</Text>
-        <View>{this.state.posts.map(post => <Text>{post.data.link_url}</Text>)}</View>
+        <View>{this.state.posts.map(post => <Text>{post.data.body}</Text>)}</View>
       </View>
     );
   }
